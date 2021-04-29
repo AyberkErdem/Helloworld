@@ -7,7 +7,7 @@
 
                 MailMessage Mess = new MailMessage();
                 SmtpClient smtp = new SmtpClient();
-                Mess.From = new MailAddress("erdemayberkae@gmail.com");
+                Mess.From = new MailAddress("yourmail");
                 Mess.To.Add(new MailAddress(address));
                 Mess.Subject = "Verify Mail";
                 Mess.IsBodyHtml = true; //to make message body as html  

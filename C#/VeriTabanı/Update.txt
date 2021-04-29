@@ -5,7 +5,7 @@
                 MySqlConnection link;
                 String connectionString;
                 connectionString = "SERVER=" + ServerName + ";" + "DATABASE=" +
-                DataBaseName + ";" + "UID=" + "ercanozk_adminDS" + ";" + "PASSWORD=" + "2bpkVX4YbL$N" + ";";
+                DataBaseName + ";" + "UID=" + ""+ ";" + "PASSWORD=" + ""$N" + ";";
                 link = new MySqlConnection(connectionString);
                 if (SelectData(TableName, DataBaseName, ServerName, UserName, Selection) != value)
                 {

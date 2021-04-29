@@ -6,7 +6,7 @@
                 MySqlConnection link;
                 string connectionString;
                 connectionString = "SERVER=" + ServerName + ";" + "DATABASE=" +
-                DataBaseName + ";" + "UID=" + "ercanozk_adminDS" + ";" + "PASSWORD=" + "2bpkVX4YbL$N" + ";";
+                DataBaseName + ";" + "UID=" + ""+ ";" + "PASSWORD=" + ""$N" + ";";
                 link = new MySqlConnection(connectionString);
                 link.Open();
                 MySqlCommand command = new MySqlCommand("SELECT * FROM "+DataBaseName+"." + TableName + " WHERE Username='" + UserName + "' AND Password='" + Password
