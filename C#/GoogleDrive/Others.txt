@@ -1,0 +1,28 @@
+  public static Permission InsertPermission(DriveService service, String fileId, String value,
+      String type, String role)
+        {
+            Permission newPermission = new Permission();
+
+            newPermission.Type = type;
+            newPermission.Role = role;
+            try
+            {
+                return service.Permissions.Create(newPermission, fileId).Execute();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("An error occurred: " + e.Message);
+            }
+            return null;
+        }
+
+ public DriveService GetDriveService(UserCredential credentials)
+        {
+            return new DriveService(new
+               BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credentials,
+                ApplicationName = MyApplicationName,
+            });
+
+        }

@@ -1,0 +1,23 @@
+  <input type="file" name="image[]" accept="image/jpeg" multiple>
+  
+$datas=array("","","","","");
+     $filename=$_FILES['image']['name'];
+     $tmpname=$_FILES['image']['tmp_name'];
+     $filetype=$_FILES['image']['type'];
+     for ($i=0; $i <=count($tmpname)-1 ; $i++) {
+       $name=addslashes($filename[$i]);
+       $tmp=addslashes(file_get_contents($tmpname[$i]));
+       $datas[$i]=$tmp;
+     }
+      $adress=$_POST['address'];
+        $adress.=",";
+      $adress.=$_POST['District'];
+          $adress.=",";
+        $adress.=$_POST['City'];
+
+      $query=("CALL AddPoster('".$_SESSION['user']."','".$_POST['description']."','".$adress."','".$_POST['latitude']."','".$_POST['longitude']."','Ev','".$datas[0]."',
+      '".$datas[1]."','".$datas[2]."','".$datas[3]."','".$datas[4]."')");
+    if(mysqli_query($dbc,$query))
+    {
+      header("Location:Home.php");
+    }

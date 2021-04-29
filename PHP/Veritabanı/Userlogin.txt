@@ -1,0 +1,25 @@
+<?php
+require_once('config.php');
+session_start();
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+  $name=$_POST['fname'];
+  $pass=$_POST['Password'];
+  $query=("select * from student where OgrNu='".$name."' and TC='".$pass."' ") or die(mysql_error());
+  $response=@mysqli_query($dbc,$query);
+if(mysqli_num_rows($response))  {
+    $_SESSION["login"] = "true";
+    $_SESSION["user"] = $name;
+    $_SESSION["pass"] = $pass;
+    header("Location:atom/atom/home.php");
+}
+else {
+    if($name=="" or $pass=="") {
+        echo "<center>Lutfen kullanici adi ya da sifreyi bos birakmayiniz..!</center>";
+    }
+    else {
+        echo "<center>Kullanici Adi/Sifre Yanlis.<br></center>";
+    }
+}
+}
+mysqli_close($dbc);
+ ?>

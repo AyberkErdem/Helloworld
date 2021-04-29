@@ -1,0 +1,29 @@
+ public string VerifyMail(String address,String OTP)
+        {
+            try
+            {
+
+             
+
+                MailMessage Mess = new MailMessage();
+                SmtpClient smtp = new SmtpClient();
+                Mess.From = new MailAddress("erdemayberkae@gmail.com");
+                Mess.To.Add(new MailAddress(address));
+                Mess.Subject = "Verify Mail";
+                Mess.IsBodyHtml = true; //to make message body as html  
+                Mess.Body = "Enter The Verify Code Given Below <br /> <br /> <br />" + "\t\t" + OTP;
+                smtp.Port = 587;
+                smtp.Host = "smtp.gmail.com"; //for gmail host  
+                smtp.EnableSsl = true;
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = new NetworkCredential("erdemayberkae@gmail.com", "Pass");
+                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtp.Send(Mess);
+                return "Sended";
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show("Give Acces for our application from your gmail");
+                return "failed";
+            }
+        }

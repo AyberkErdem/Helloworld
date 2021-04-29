@@ -1,0 +1,33 @@
+  public string Login(String TableName,String DataBaseName,String ServerName,String UserName,String Password)
+        {
+            try
+            {
+
+                MySqlConnection link;
+                string connectionString;
+                connectionString = "SERVER=" + ServerName + ";" + "DATABASE=" +
+                DataBaseName + ";" + "UID=" + "ercanozk_adminDS" + ";" + "PASSWORD=" + "2bpkVX4YbL$N" + ";";
+                link = new MySqlConnection(connectionString);
+                link.Open();
+                MySqlCommand command = new MySqlCommand("SELECT * FROM "+DataBaseName+"." + TableName + " WHERE Username='" + UserName + "' AND Password='" + Password
+                    + "'", link);
+                MySqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())  
+                {
+                    link.Close();
+                    return "success";
+                }
+                else
+                {
+                    link.Close();
+                    return "failed";
+                }
+
+            }
+            catch(Exception ex)
+            {
+                return ex.ToString();
+            }
+
+
+        }

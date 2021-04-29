@@ -1,0 +1,41 @@
+ public  string oku(string dosyayolu)//dosya okuma
+        {
+            FileStream fs = new FileStream(dosyayolu, FileMode.Open, FileAccess.Read);
+            try //dosya açýlacak mý?
+            {
+                StreamReader sr = new StreamReader(fs);
+                string okut;
+                string veri = "";
+                try//dosya okurken bir hata var mý?
+                {
+                    okut = sr.ReadLine();
+                    if (okut == null)
+                    {
+                        sr.Close();
+                        fs.Close();
+                        return "Empty File";
+                    }
+                    while (okut != null)
+                    {
+                        veri += okut;
+                        okut = sr.ReadLine();
+                    }
+
+
+                    sr.Close();
+                    fs.Close();
+
+                    return veri;
+                }
+                catch (Exception ex)//okuma kýsmýnda hata nerede?
+                {
+                    sr.Close();
+                    fs.Close();
+                    return ex.ToString();
+                }
+            }
+            catch (Exception ex)//açýlmadý neden?
+            {
+                return ex.ToString();
+            }
+        }

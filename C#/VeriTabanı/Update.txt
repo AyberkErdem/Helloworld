@@ -1,0 +1,33 @@
+  public string update(String TableName, String DataBaseName, String ServerName, String UserName, String Selection,String value)
+        {
+            try
+            {
+                MySqlConnection link;
+                String connectionString;
+                connectionString = "SERVER=" + ServerName + ";" + "DATABASE=" +
+                DataBaseName + ";" + "UID=" + "ercanozk_adminDS" + ";" + "PASSWORD=" + "2bpkVX4YbL$N" + ";";
+                link = new MySqlConnection(connectionString);
+                if (SelectData(TableName, DataBaseName, ServerName, UserName, Selection) != value)
+                {
+                   
+                  
+                    link.Open();
+                    MySqlCommand command = new MySqlCommand("update "+DataBaseName +"." + TableName + " set " + Selection + "='" + value + "' WHERE Username='" + UserName + "'", link);
+                    command.ExecuteNonQuery();
+                    link.Close();
+                    return "Updated";
+                }
+                else
+                {
+                    link.Close();
+                    return "Same";
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();
+            }
+
+
+          
+        }

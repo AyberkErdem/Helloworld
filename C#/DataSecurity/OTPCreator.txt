@@ -1,0 +1,86 @@
+  private int rounder = 0;
+        public string OTPcreator(OTPClass a,String tablename,String databasename,String servername,String username,String filename)
+        {        
+            try
+            {
+                string otp1 = "";
+                Random rnd = new Random();
+                string tmp;
+                DataSecurity.Veritabaný vt = new DataSecurity.Veritabaný();
+                tmp = vt.SelectData(tablename, databasename, servername, username, "Directory");
+                tmp = tmp.Replace("\\", "");
+                tmp = tmp.Replace(":", "");
+
+                otp1 = CharacterCreator(tmp, otp1, 0);
+                int son = rnd.Next(0, 99);
+                otp1 += son.ToString();
+
+                tmp = vt.SelectData(tablename, databasename, servername, username, "Username");
+
+                otp1 += CharacterCreator(tmp, otp1, 0);
+
+                tmp = filename;
+                tmp = tmp.Replace("\\", "");
+                otp1 += CharacterCreator(tmp, otp1, 0);
+                tmp = DateTime.Now.ToString("h:mm:ss");
+                tmp = tmp.Replace(":", "");
+                otp1 += CharacterCreator(tmp, otp1, 0);
+                string hmm = vt.update(tablename, databasename, servername, username, "OTP", otp1);
+                if (hmm == "same" && a.rounder <= 5)
+                {
+                    a.rounder++;
+                    OTPcreator(a, tablename, databasename, servername, username, filename);
+
+                }
+                else if (hmm == "same" && a.rounder > 5)
+                {
+                    a.rounder = 0;
+                    return "OTPfailed";
+                }
+                else if (hmm == "Updated")
+                {
+                    a.rounder = 0;
+                    return otp1;
+                }
+                    a.rounder = 0;
+                    return "OTPfailed";
+               
+
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();
+            }
+        }
+        private string CharacterCreator(string tmp,string otp,int round)
+        {
+            try
+            {
+                char[] hadto = { ',', '.', '*', '/', '&', '%', '$' };
+                round++;
+                char[] car;
+                int deger;
+                string origin = tmp;
+                Random rnd = new Random();
+                deger = rnd.Next(1, tmp.Length - 2);
+                car = tmp.ToCharArray();
+                tmp = car[deger].ToString();
+                int indexer = otp.IndexOf(tmp);
+                if (indexer == -1)
+                    return tmp;
+                else if (round < 100)
+                {
+                    return CharacterCreator(origin, otp, round);
+                }
+                else
+                {
+                    deger = rnd.Next(0, 6);
+                    tmp = hadto[deger].ToString();
+                    return tmp;
+                }
+            }
+            catch(Exception ex)
+            {
+                return ex.ToString();
+            }
+        }

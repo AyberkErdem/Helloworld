@@ -1,0 +1,23 @@
+ public string InsertData(String TableName, String DataBaseName, String ServerName, String UserName,
+            String Password,String Directory,String OTP, String Email ,String MacAdresi)
+        {
+            try
+            {
+
+                MySqlConnection link;
+                String connectionString;
+                connectionString = "SERVER=" + ServerName + ";" + "DATABASE=" +
+                DataBaseName + ";" + "UID=" + "ercanozk_adminDS" + ";" + "PASSWORD=" + "2bpkVX4YbL$N" + ";";
+                link = new MySqlConnection(connectionString);
+                MacAdresi = MacAdresi.Replace(" ", "");
+                link.Open();
+                MySqlCommand command = new MySqlCommand("insert into "+DataBaseName+"." + TableName + " values('','" + UserName + "','" + Password + "','" + Directory + "','" + OTP + "','" + Email + "','" + MacAdresi + "')", link);
+                command.ExecuteNonQuery();
+                link.Close();
+                return "success";
+            }
+            catch(Exception ex)
+            {
+                return ex.ToString()+"Insert Error";
+            }
+        }

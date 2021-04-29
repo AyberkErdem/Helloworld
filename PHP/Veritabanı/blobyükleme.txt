@@ -1,0 +1,41 @@
+function testfun()
+{
+require_once('config.php');
+  $file_size = $_FILES['defter']['size'];
+  if($file_size !=0 ){
+
+    $filename = $_FILES['defter']['name'];
+    $tmpname = $_FILES['defter']['tmp_name'];
+    $file_size = $_FILES['defter']['size'];
+    $file_type = $_FILES['defter']['type'];
+    $ext = pathinfo($filename, PATHINFO_EXTENSION);
+    $fp  = fopen($tmpname, 'r');
+    $content = fread($fp, filesize($tmpname));
+    $content = addslashes($content);
+    fclose($fp);
+    if($ext=="pdf"||$ext=="PDF")
+    {
+    $query="insert into  stajdefteri values('','".$_SESSION['user']."','','0','".$content."','".$file_size ."','0',curDate());";
+    if(mysqli_query($dbc,$query))
+    {
+      echo"<script>alert('Defter sayfasý yüklenmiþtir.')</script>";
+      header("location:OgrStaj.php");
+
+    }
+    else
+    {
+      echo"<script>alert('Bir hata oldu tekrar deneyiniz.')</script>";
+    }
+    }
+
+else
+{
+  echo"<script>alert('Dosya tipi pdf olmalýdýr!')</script>";
+}
+
+}
+}
+if(array_key_exists('baþvur',$_POST))
+{
+   testfun();
+}

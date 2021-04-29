@@ -1,0 +1,21 @@
+  public string upload(DriveService Service, string filename, string filepath, string content)
+        {
+
+            var filemetadata = new Google.Apis.Drive.v3.Data.File();
+            filemetadata.Name = filename;
+            filemetadata.Parents = new List<string> { folderýd };
+            FilesResource.CreateMediaUpload request;
+            using (var stream = new FileStream(filepath, FileMode.Open))
+            {
+                request = Service.Files.Create(filemetadata, stream, content);
+                request.Upload();
+            }
+            var file = request.ResponseBody;
+            var fileMetadata = new Google.Apis.Drive.v3.Data.File()
+            {
+                Name = filename
+            };
+          
+            return file.Id;
+
+        }

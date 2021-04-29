@@ -1,0 +1,18 @@
+Query de birden fazla sonuç karþýlaþtýrma örneði
+
+select * from poster where Id IN(46,45) order by Id ASC
+
+If yapýsý
+
+IF Name_p!="" then
+update user set Name=Name_p where Name=user;
+END IF;
+
+Variable Atamasý
+
+declare PosterId int default -1;
+
+Kullanýmý
+
+set PosterId=....
+

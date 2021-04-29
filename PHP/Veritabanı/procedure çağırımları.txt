@@ -1,0 +1,12 @@
+ require_once('../Site/config.php');
+           $dbc->next_result();
+
+           $sql="call deftergetir(".$_POST['defterselect'].")";
+           $_SESSION['OgrNu']=$_POST['defterselect'];
+             $result=@mysqli_query($dbc,$sql);
+               if ($result->num_rows > 0) {
+                 while($row=$result->fetch_assoc())
+
+//gereken iþlemler
+
+ $row['OgrNu'];/*örnek field çaðrýmý*/

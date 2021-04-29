@@ -1,0 +1,55 @@
+  public  string yaz(string dosyaismi, string veri)
+        {
+            string direct = Directory.GetCurrentDirectory();
+            direct+="\\"+dosyaismi;
+            try
+            {
+                FileStream fs = new FileStream(direct, FileMode.OpenOrCreate, FileAccess.Write);
+           
+          
+            try//dosya açýldý mý
+            {
+                StreamWriter sw = new StreamWriter(fs);
+
+
+              
+                    try//yazmayý dene
+                    {
+                        sw.WriteLine(veri + ".");
+                    }
+                    catch (Exception ex)//niye yazamadýk?
+                    {
+                            sw.Close();
+                            fs.Close();
+                            return ex.ToString();
+                    }
+
+                
+                try//kapatmayý dene
+                {
+                    sw.Flush();
+                    sw.Close();
+                    fs.Close();
+                    
+                }
+                catch (Exception ex)//kapatamadýk bir þey oldu ne oldu?
+                {
+                        sw.Close();
+                        fs.Close();
+                        return ex.ToString();
+                }
+
+            }
+            catch (Exception ex)//dosya niye açýlmadý?
+            {
+                  
+                    fs.Close();
+                    return ex.ToString();
+            }
+            return "Writed succesfully";
+        }
+            catch (Exception ex)
+            {
+                return ex.ToString();
+            }
+        }

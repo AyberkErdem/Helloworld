@@ -1,0 +1,39 @@
+ public string SelectData(String TableName, String DataBaseName, String ServerName, String UserName,String Selection)
+            {
+            try
+            {
+                String value="";
+                MySqlConnection link;
+                String connectionString;
+                connectionString = "SERVER=" + ServerName + ";" + "DATABASE=" +
+                DataBaseName + ";" + "UID=" + "ercanozk_adminDS" + ";" + "PASSWORD=" + "2bpkVX4YbL$N" + ";";
+                link = new MySqlConnection(connectionString);
+                link.Open();
+                MySqlCommand command = new MySqlCommand("SELECT "+Selection+ " FROM " +DataBaseName+"." + TableName + " WHERE Username='" + UserName+ "'", link);
+                MySqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        value=reader[Selection].ToString();
+                    }
+                    link.Close();
+                    return value;
+                    
+                  
+                    
+                    //return "success";
+                }
+                else
+                {
+                    link.Close();
+                    return "failed";
+                }
+
+            }
+            catch (Exception ex)
+            {
+             
+                return ex.ToString();
+            }
+        }

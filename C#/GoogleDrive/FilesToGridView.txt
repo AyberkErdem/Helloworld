@@ -1,0 +1,56 @@
+ public void he(DataGridView DataScreen)
+        {
+            UserCredential Usercredential;
+
+            using (var stream = new FileStream("client_secret.json",
+               FileMode.Open, FileAccess.Read))
+            {
+                string credPath = "token.json";
+                Usercredential = GoogleWebAuthorizationBroker
+                      .AuthorizeAsync(
+                   GoogleClientSecrets.Load(stream).Secrets,
+                   DriveScopes, "user", CancellationToken.None,
+                   new FileDataStore(credPath, true)).Result;
+                Console.WriteLine("Credential file saved to: " +
+                   credPath);
+            }
+
+            var service = new DriveService(new
+               BaseClientService.Initializer()
+            {
+                HttpClientInitializer = Usercredential,
+                ApplicationName = MyApplicationName,
+            });
+
+            FilesResource.ListRequest MylistRequest =
+               service.Files.List();
+            MylistRequest.PageSize = 10;
+            MylistRequest.Fields = "nextPageToken, files(id, name)";
+
+            IList<Google.Apis.Drive.v3.Data.File> files =
+               MylistRequest.Execute().Files;
+            Console.WriteLine("Files:");
+            DataTable table = new DataTable();
+            table.Columns.Add("File Name");
+            table.Columns.Add("FileId");
+            string a;
+            if (files != null && files.Count > 0)
+            {
+                foreach (var file in files)
+                {
+
+                    a = file.DriveId;
+                    table.Rows.Add(file.Name,a);
+                }
+                DataScreen.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+
+
+                DataScreen.DataSource = table;
+            }
+            else
+            {
+                Console.WriteLine("No files found in your Google Drive.");
+            }
+            Console.Read();
+
+        }

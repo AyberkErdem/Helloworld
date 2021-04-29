@@ -1,0 +1,6 @@
+         string path = "Sorular//" +x;
+            int fCount = Directory.GetFiles(path, "*", SearchOption.TopDirectoryOnly).Length;
+            var buttons = new Dictionary<string, Button> { { "tile1", button1 }, { "tile2", button2 }, { "tile3", button3 }, { "tile4", button4 }, { "tile5", button5 }, { "tile6", button6 }, { "tile7", button7 } };
+            var firstThree = buttons.Take(fCount);
+            foreach (var b in firstThree)
+                b.Value.Visible = true;

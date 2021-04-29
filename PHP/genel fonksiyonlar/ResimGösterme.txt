@@ -1,0 +1,28 @@
+/*embed src ile önizleme gerçekleþtirme*/ 
+if(isset($_POST['Göster']))
+         {
+
+           require_once('../Site/config.php');
+           $dbc->next_result();
+
+           $sql="call deftergetir(".$_POST['defterselect'].")";
+           $_SESSION['OgrNu']=$_POST['defterselect'];
+             $result=@mysqli_query($dbc,$sql);
+               if ($result->num_rows > 0) {
+                 while($row=$result->fetch_assoc())
+                 {?><tr>
+                   <?php
+                     echo "<td>".$row['OgrNu']."</td><td><a target='_blank' href='deftersee.php?subject=".$row['OgrNu']."'>Sekmede Aç</a></td>
+                     <td><embed src='data:application/pdf;base64,".base64_encode($row['sayfa'])."' widht='100'</td>
+                     <td><form class='' action='stajdefteronay.php' method='post'>
+                     <input type='submit' name='onay' value='onay'/>
+                     <input type='submit' name='reject' value='reddet'/><input type='hidden' name='id' value=".$row['Id']."/></form></td>";
+                       ?></tr><?php
+                 }
+               }
+               else
+               {
+                 echo"Nothing new here...";
+               }
+
+           }

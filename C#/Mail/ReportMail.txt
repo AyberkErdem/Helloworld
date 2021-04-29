@@ -1,0 +1,26 @@
+ public string SendMail(String message)
+        {
+            try
+            {
+                MailMessage Mess = new MailMessage();
+                SmtpClient smtp = new SmtpClient();
+                Mess.From = new MailAddress("erdemayberkae@gmail.com");
+                Mess.To.Add(new MailAddress("erdemayberkae@gmail.com"));
+                Mess.Subject = "Test";
+                Mess.IsBodyHtml = true; //to make message body as html  
+                Mess.Body = message;
+                smtp.Port = 587;
+                smtp.Host = "smtp.gmail.com"; //for gmail host  
+                smtp.EnableSsl = true;
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = new NetworkCredential("MailName", "Password");
+                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtp.Send(Mess);
+                return "Sended";
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.ToString());
+                return "failed";
+            }
+        }
